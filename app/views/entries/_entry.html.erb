@@ -1,16 +1,20 @@
 <li id="entry-<%= entry.id %>">
   <%= link_to gravatar_for(entry.user, size: 50), entry.user %>
   <span class="user"><%= link_to entry.user.name, entry.user %></span>
-  <font size="5"><span class="post_title"><%= link_to entry.title, entry %></span></font>
-  <span class="content">
-    <%= image_tag entry.picture.url if entry.picture? %>
-    <%= entry.body %>
-  </span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(entry.created_at) %> ago.
     <% if current_user?(entry.user) %>
       <%= link_to "delete", entry, method: :delete,
                                        data: { confirm: "You sure?" } %>
+    <% end %>
+  </span>
+  <font size="5"><span class="post_title"><%= link_to entry.title, entry %></span></font>
+  <span class="content">
+    <%= image_tag entry.picture.url if entry.picture? %>
+    <% if entry.body.length> 1000 %>
+      <%= entry.body[0..1000] %>... <font color: "red"><span><%= link_to "Read More", entry %></span></font>
+    <% else %>
+      <%= entry.body %>
     <% end %>
   </span>
 </li>
