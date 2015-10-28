@@ -1,0 +1,46 @@
+<% provide(:title, @entry.title) %>
+<div class="row">
+  <aside class="col-md-4">
+    <h3><b>Ruby Community</b></h3>
+    <%= link_to image_tag("rails.png", alt: "Rails logo", width: "100"),
+          '#' %>
+  </aside>
+  <div class="col-md-8">
+  	<ol class="entries">
+	  <%= link_to gravatar_for(@entry.user, size: 50), @entry.user %>
+	  <span class="user"><%= link_to @entry.user.name, @entry.user %></span>
+	  <font size="4"><span class="post_title"><%= @entry.title %></span></font>
+	  <span class="content">
+	    <%= image_tag @entry.picture.url if @entry.picture? %>
+	    <%= @entry.body %>
+	  </span>
+	  <span class="timestamp">
+	    Posted <%= time_ago_in_words(@entry.created_at) %> ago.
+	  </span>
+
+	  <br/>
+
+	  <% if @entry.comments.any? %>
+      <h3>Comments (<%= @entry.comments.count %>)</h3>
+      <ol class="entries">
+        <%= render @comments %>
+      </ol>
+      <%= will_paginate @comments %>
+    <% end %>
+  	</ol>
+
+  	<hr />
+
+
+
+	<% if (current_user == @entry.user) || (logged_in? && current_user.following?(@entry.user)) %>
+		<h4>Post a comment</h4>
+		
+		<section class="entry_form">
+        <%= render 'shared/comment_form' %>
+      </section>
+		
+	<% end %>
+
+  </div>
+</div>
