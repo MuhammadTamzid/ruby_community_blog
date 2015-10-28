@@ -9,7 +9,7 @@
   	<ol class="entries">
 	  <%= link_to gravatar_for(@entry.user, size: 50), @entry.user %>
 	  <span class="user"><%= link_to @entry.user.name, @entry.user %></span>
-	  <font size="4"><span class="post_title"><%= @entry.title %></span></font>
+	  <font size="5"><span class="post_title"><%= @entry.title %></span></font>
 	  <span class="content">
 	    <%= image_tag @entry.picture.url if @entry.picture? %>
 	    <%= @entry.body %>
